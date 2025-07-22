@@ -129,8 +129,9 @@
 @layer components {
   .calc-card {
     @apply bg-card border border-border rounded-lg p-6 shadow-[var(--shadow-soft)] 
-           hover:shadow-[var(--shadow-medium)] hover:bg-[hsl(var(--card-hover))]
-           transition-all duration-300 cursor-pointer;
+           hover:shadow-[var(--shadow-strong)] hover:bg-[hsl(var(--card-hover))]
+           transition-all duration-300 cursor-pointer transform
+           hover:scale-105 hover:-translate-y-2;
   }
   
   .calc-operation {

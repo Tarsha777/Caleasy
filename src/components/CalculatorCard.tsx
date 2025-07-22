@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 
 interface CalculatorCardProps {
@@ -24,39 +24,47 @@ export const CalculatorCard = ({
   const [input2, setInput2] = useState('');
   const [result, setResult] = useState<number | null>(null);
 
-  const handleCalculate = () => {
-    const num1 = parseFloat(input1);
-    
-    if (isNaN(num1)) {
-      toast.error('Please enter a valid number');
-      return;
-    }
-
-    try {
-      let calcResult: number;
+  // Auto-calculate when inputs change
+  useEffect(() => {
+    const autoCalculate = () => {
+      const num1 = parseFloat(input1);
       
-      if (requiresTwoInputs) {
-        const num2 = parseFloat(input2);
-        if (isNaN(num2)) {
-          toast.error('Please enter a valid second number');
-          return;
-        }
-        calcResult = operation(num1, num2);
-      } else {
-        calcResult = operation(num1);
-      }
-
-      if (!isFinite(calcResult)) {
-        toast.error('Invalid operation result');
+      // Clear result if input1 is empty or invalid
+      if (!input1.trim() || isNaN(num1)) {
+        setResult(null);
         return;
       }
 
-      setResult(calcResult);
-      toast.success(`${title} calculated successfully!`);
-    } catch (error) {
-      toast.error('Calculation error occurred');
-    }
-  };
+      try {
+        let calcResult: number;
+        
+        if (requiresTwoInputs) {
+          const num2 = parseFloat(input2);
+          // Only calculate if both inputs are valid
+          if (!input2.trim() || isNaN(num2)) {
+            setResult(null);
+            return;
+          }
+          calcResult = operation(num1, num2);
+        } else {
+          calcResult = operation(num1);
+        }
+
+        if (!isFinite(calcResult)) {
+          setResult(null);
+          return;
+        }
+
+        setResult(calcResult);
+      } catch (error) {
+        setResult(null);
+      }
+    };
+
+    // Small delay to avoid too many calculations while typing
+    const timeoutId = setTimeout(autoCalculate, 300);
+    return () => clearTimeout(timeoutId);
+  }, [input1, input2, operation, requiresTwoInputs]);
 
   const handleClear = () => {
     setInput1('');
@@ -79,7 +87,6 @@ export const CalculatorCard = ({
           onChange={(e) => setInput1(e.target.value)}
           placeholder={placeholder1}
           className="calc-input w-full"
-          onKeyPress={(e) => e.key === 'Enter' && handleCalculate()}
         />
         
         {requiresTwoInputs && (
@@ -89,27 +96,18 @@ export const CalculatorCard = ({
             onChange={(e) => setInput2(e.target.value)}
             placeholder={placeholder2}
             className="calc-input w-full"
-            onKeyPress={(e) => e.key === 'Enter' && handleCalculate()}
           />
         )}
         
-        <div className="flex gap-2">
-          <button
-            onClick={handleCalculate}
-            className="calc-operation flex-1"
-          >
-            Calculate
-          </button>
-          <button
-            onClick={handleClear}
-            className="px-4 py-2 bg-secondary text-secondary-foreground hover:bg-secondary-hover rounded-md transition-all duration-200"
-          >
-            Clear
-          </button>
-        </div>
+        <button
+          onClick={handleClear}
+          className="w-full px-4 py-2 bg-secondary text-secondary-foreground hover:bg-secondary-hover rounded-md transition-all duration-200"
+        >
+          Clear
+        </button>
         
         {result !== null && (
-          <div className="mt-4 p-3 bg-accent rounded-md border-l-4 border-primary">
+          <div className="mt-4 p-3 bg-accent rounded-md border-l-4 border-primary animate-fade-in">
             <div className="text-sm text-muted-foreground">Result:</div>
             <div className="text-xl font-mono font-bold text-primary">
               {typeof result === 'number' ? result.toFixed(6).replace(/\.?0+$/, '') : result}

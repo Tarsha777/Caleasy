@@ -230,8 +230,8 @@ const Index = () => {
           <div className="inline-block p-6 bg-card rounded-lg border border-border shadow-[var(--shadow-soft)]">
             <h2 className="text-lg font-semibold text-foreground mb-2">Quick Tips</h2>
             <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• Press Enter in any input field to calculate</li>
-              <li>• All operations provide instant results</li>
+              <li>• Results appear automatically as you type</li>
+              <li>• All operations provide instant calculations</li>
               <li>• Clear button resets each calculation</li>
               <li>• Trigonometric functions use radians</li>
             </ul>
