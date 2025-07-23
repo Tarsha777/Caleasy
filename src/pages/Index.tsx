@@ -194,6 +194,58 @@ const Index = () => {
       placeholder1: 'Enter exponent',
       description: 'e raised to the power of x'
     },
+    {
+      title: 'Rectangle Area',
+      symbol: 'A□',
+      operation: (a: number, b: number) => a * b,
+      requiresTwoInputs: true,
+      placeholder1: 'Length',
+      placeholder2: 'Width',
+      description: 'Area of rectangle (length × width)'
+    },
+    {
+      title: 'Triangle Area',
+      symbol: 'A△',
+      operation: (a: number, b: number) => (a * b) / 2,
+      requiresTwoInputs: true,
+      placeholder1: 'Base',
+      placeholder2: 'Height',
+      description: 'Area of triangle (base × height ÷ 2)'
+    },
+    {
+      title: 'Circle Area',
+      symbol: 'A○',
+      operation: (a: number) => Math.PI * a * a,
+      requiresTwoInputs: false,
+      placeholder1: 'Radius',
+      description: 'Area of circle (π × radius²)'
+    },
+    {
+      title: 'Square Area',
+      symbol: 'A⬜',
+      operation: (a: number) => a * a,
+      requiresTwoInputs: false,
+      placeholder1: 'Side length',
+      description: 'Area of square (side²)'
+    },
+    {
+      title: 'Trapezoid Area',
+      symbol: 'A⬢',
+      operation: (a: number, b: number) => (a * b) / 2,
+      requiresTwoInputs: true,
+      placeholder1: 'Sum of bases (b1+b2)',
+      placeholder2: 'Height',
+      description: 'Area of trapezoid (sum of bases × height ÷ 2)'
+    },
+    {
+      title: 'Parallelogram Area',
+      symbol: 'A▱',
+      operation: (a: number, b: number) => a * b,
+      requiresTwoInputs: true,
+      placeholder1: 'Base',
+      placeholder2: 'Height',
+      description: 'Area of parallelogram (base × height)'
+    },
   ];
 
   return (
