@@ -255,16 +255,9 @@ const Index = () => {
       
       <div className="relative z-10 container mx-auto px-4 py-8">
         <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <img 
-              src={calculatorLogo} 
-              alt="Calculator Logo" 
-              className="w-16 h-16 object-contain"
-            />
-            <h1 className="text-5xl font-bold text-foreground">
-              Mathematical Calculator
-            </h1>
-          </div>
+          <h1 className="text-5xl font-bold text-foreground mb-4">
+            Mathematical Calculator
+          </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Interactive mathematical operations at your fingertips. 
             Each operation is ready to use - just enter your numbers and calculate instantly.
